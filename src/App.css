@@ -1,0 +1,64 @@
+/* ==========================================================
+   TikTok Clone Global Style (다크 모드 & 모바일 앱 최적화)
+   ========================================================== */
+
+/* 1. 글로벌 리셋: 모든 태그의 기본 여백을 없애고 크기 계산을 직관적으로 만듭니다. */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -ms-overflow-style: none; /* IE, Edge에서 스크롤바 숨기기 */
+  scrollbar-width: none;    /* Firefox에서 스크롤바 숨기기 */
+}
+
+/* 크롬, 사파리 등 WebKit 브라우저에서 스크롤바 완벽하게 숨기기 */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* 2. Body 설정: 앱의 가장 밑바탕 색상과 기본 폰트를 지정합니다. */
+body {
+  background-color: #000; /* 완전한 블랙 */
+  color: #fff;            /* 기본 글자색은 화이트 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased; /* 글자를 더 선명하고 부드럽게 */
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* 브라우저 전체 스크롤을 막고 앱 내부에서만 스크롤되도록 설정 */
+}
+
+/* 3. 폼 요소 폰트 통일: 버튼이나 인풋창이 기본 폰트를 무시하지 않도록 강제합니다. */
+input, button, textarea, select {
+  font-family: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 4. 최상위 App 컨테이너: 화면에 꽉 차는 앱 환경 구성 */
+.App {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: #000;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------
+   (참고) 기존 React 기본 애니메이션 코드는 앱 구동에 필요 없지만, 
+   혹시 모를 의존성을 위해 하단에 남겨둡니다. 
+   -------------------------------------------------------- */
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

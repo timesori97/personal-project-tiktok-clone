@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  color: white;
+  font-family: sans-serif;
+}
+
+/* 전체 화면 높이에 맞춤 */
+.app-container {
+  height: 100vh;
+  width: 100%;
+  max-width: 500px; /* 모바일 비율 유지 */
+  margin: 0 auto;
+  position: relative;
+}
+
+/* 스크롤 스냅 컨테이너 */
+.video-feed {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory; /* Y축으로 딱딱 끊어지게 스크롤 */
+  scroll-behavior: smooth;
+}
+
+.video-feed::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨기기 */
+}
+
+/* 개별 영상 아이템 */
+.video-item {
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start; /* 화면 시작점에 스냅 맞춤 */
+  position: relative;
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 영상 위 텍스트 덮어쓰기 */
+.video-footer {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  max-width: 80%;
+}
+
+.video-footer h3 { padding-bottom: 10px; }
+.description { padding-top: 5px; font-size: 14px; }
+
+/* 우측 사이드 버튼바 */
+.video-sidebar {
+  position: absolute;
+  bottom: 50px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-btn {
+  background: none;
+  border: none;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 업로드 페이지 스타일 */
+.upload-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  padding: 10px 20px;
+  background-color: #fe2c55; /* 틱톡 브랜드 컬러 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-container { padding: 50px 20px; display: flex; flex-direction: column; gap: 20px;}
+.upload-form { display: flex; flex-direction: column; gap: 15px; }
+.upload-form input, .upload-form textarea { padding: 10px; border-radius: 5px; border: 1px solid #333; background: #222; color: white;}
+.upload-form button { padding: 15px; background: #fe2c55; color: white; border: none; border-radius: 5px; cursor: pointer; }
