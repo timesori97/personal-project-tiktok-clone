@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.project1.mapper.VideoMapper">
+
+    <select id="findAll" resultType="com.example.project1.entity.Video">
+        SELECT 
+            v.id,
+            v.user_id as userId,
+            v.title, 
+            v.description, 
+            v.video_url as videoUrl,       v.thumbnail_url as thumbnailUrl, v.duration,
+            v.view_count as viewCount,
+            v.deleted_yn as deletedYn,
+            v.created_at as createdAt,
+            v.updated_at as updatedAt,
+            u.username as writerName,
+            u.profile_image as writerProfileImage
+        FROM videos v
+        JOIN users u ON v.user_id = u.id
+        WHERE v.deleted_yn = 'N'
+        ORDER BY v.created_at DESC
+    </select>
+
+    <select id="findById" parameterType="long" resultType="com.example.project1.entity.Video">
+        SELECT 
+            v.id,
+            v.user_id as userId,
+            v.title,
+            v.description,
+            v.video_url as videoUrl,       v.thumbnail_url as thumbnailUrl,
+            v.view_count as viewCount,
+            u.username as writerName
+        FROM videos v
+        JOIN users u ON v.user_id = u.id
+        WHERE v.id = #{id} AND v.deleted_yn = 'N'
+    </select>
+
+    <insert id="insertVideo" parameterType="com.example.project1.entity.Video">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT videos_seq.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO videos (
+            id, user_id, title, description, video_url, thumbnail_url, duration
+        ) VALUES (
+            #{id}, #{userId}, #{title}, #{description}, #{videoUrl}, #{thumbnailUrl}, #{duration}
+        )
+    </insert>
+
+    <update id="deleteVideo" parameterType="long">
+        UPDATE videos 
+        SET deleted_yn = 'Y', updated_at = CURRENT_TIMESTAMP 
+        WHERE id = #{id}
+    </update>
+
+    <update id="incrementViewCount" parameterType="long">
+        UPDATE videos 
+        SET view_count = view_count + 1 
+        WHERE id = #{id}
+    </update>
+
+    <select id="searchVideos" parameterType="string" resultType="com.example.project1.entity.Video">
+    SELECT 
+        id, 
+        user_id as userId, 
+        title, 
+        description, 
+        video_url as videoUrl, 
+        thumbnail_url as thumbnailUrl, 
+        view_count as viewCount, 
+        deleted_yn as deletedYn, 
+        created_at as createdAt
+    FROM videos 
+    WHERE (title LIKE '%' || #{keyword} || '%' 
+       OR description LIKE '%' || #{keyword} || '%')
+      AND deleted_yn = 'N'
+    ORDER BY created_at DESC
+</select>
+
+<select id="findByUserId" parameterType="long" resultType="com.example.project1.entity.Video">
+    SELECT 
+        id, 
+        user_id as userId, -- 💡 DB는 user_id, 엔티티는 userId이므로 'as' 필수!
+        title, 
+        description, 
+        video_url as videoUrl, 
+        thumbnail_url as thumbnailUrl, 
+        view_count as viewCount, 
+        deleted_yn as deletedYn,
+        created_at as createdAt
+    FROM videos 
+    WHERE user_id = #{userId} AND deleted_yn = 'N'
+    ORDER BY created_at DESC
+</select>
+
+</mapper>
